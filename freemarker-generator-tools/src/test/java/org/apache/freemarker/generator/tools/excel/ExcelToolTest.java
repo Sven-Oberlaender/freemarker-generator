@@ -23,6 +23,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -33,7 +34,8 @@ public class ExcelToolTest {
     private final File TEST_XLS = new File("./src/test/data/excel/test.xls");
     private final File TEST_XLSX = new File("./src/test/data/excel/test.xlsx");
     private final File MULTIPLE_SHEETS_XSLX_FILE = new File("./src/test/data/excel/test-multiple-sheets.xlsx");
-
+	private final String decimalSeparator =
+	        String.valueOf(new DecimalFormat().getDecimalFormatSymbols().getDecimalSeparator());
     @Test
     public void shallParseXlsFile() {
         final Workbook workbook = workbook(TEST_XLS);
@@ -77,10 +79,10 @@ public class ExcelToolTest {
 
         assertEquals("Row 1", record.get(0));
         assertEquals("01/31/17", record.get(1));
-        assertEquals("100.00", record.get(2));
-        assertEquals("€100.00", record.get(3));
+        assertEquals("100" + decimalSeparator + "00", record.get(2));
+        assertEquals("€100" + decimalSeparator + "00", record.get(3));
         assertEquals("11:00", record.get(4));
-        assertEquals("10.00%", record.get(5));
+        assertEquals("10" + decimalSeparator + "00%", record.get(5));
         assertEquals("C2*F2", record.get(6));
     }
 
