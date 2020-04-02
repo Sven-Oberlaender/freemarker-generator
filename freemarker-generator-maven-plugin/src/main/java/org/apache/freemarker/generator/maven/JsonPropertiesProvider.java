@@ -77,10 +77,18 @@ public class JsonPropertiesProvider implements OutputGeneratorPropertiesProvider
         if (!jsonFileName.startsWith(dataDirName)) {
             throw new IllegalStateException("visitFile() given file not in sourceDirectory: " + jsonDataFile);
         }
-
-        String outputFileName = jsonFileName.substring(dataDirName.length() + 1);
-        outputFileName = outputFileName.substring(0, outputFileName.length() - 5);
-        final Path outputPath = outputDir.toPath();
+        
+        // Add Java package name and class name as suggested by generator path to dataModel
+	    String outputFileName = jsonFileName.substring(dataDirName.length() + 1);
+	    outputFileName = outputFileName.substring(0, outputFileName.length() - 5);
+	    if (outputFileName.toLowerCase().endsWith(".java")) {
+	    	builder.addToDataModel("JAVA_CLASS_NAME", outputFileName.substring(
+	    			outputFileName.lastIndexOf("/") + 1, outputFileName.length() - 5));
+	    }
+	    String relativeGeneratorPath = outputFileName.substring(0, outputFileName.lastIndexOf(File.separator));
+	    builder.addToDataModel("JAVA_PACKAGE_NAME", relativeGeneratorPath.replaceAll("/", "."));
+	
+	    final Path outputPath = outputDir.toPath();
         final Path resolved = outputPath.resolve(outputFileName);
         builder.addOutputLocation(resolved);
     }
