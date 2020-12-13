@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
@@ -78,8 +79,12 @@ public class RecursiveFileResolverTest {
         final List<File> files = fileResolver(ANY_DIRECTORY, null, "*.csv").get();
 
         assertEquals(2, files.size());
-        assertEquals("file_01.txt", files.get(0).getName());
-        assertEquals("test.properties", files.get(1).getName());
+        assertHasFilename(files, "file_01.txt");
+        assertHasFilename(files, "test.properties");
+    }
+
+    private void assertHasFilename(Collection<File> collection, String filename) {
+        assertTrue(collection.stream().anyMatch(file -> file.getName().equals(filename)));
     }
 
     @Test
