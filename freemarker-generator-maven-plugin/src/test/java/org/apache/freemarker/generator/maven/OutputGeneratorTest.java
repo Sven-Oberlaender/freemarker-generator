@@ -19,15 +19,13 @@
 
 package org.apache.freemarker.generator.maven;
 
+import static junit.framework.Assert.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
+
 import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
-import mockit.Expectations;
-import mockit.Mocked;
-import org.assertj.core.api.*;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -37,20 +35,21 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static junit.framework.Assert.assertEquals;
-import static org.assertj.core.api.AssertionsForClassTypes.*;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertTrue;
+import mockit.Expectations;
+import mockit.Mocked;
+import org.assertj.core.api.Assertions;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class OutputGeneratorTest {
 
-    private File testDir = new File("src/test/data/generating-file-visitor");
-    private File dataDir = new File(testDir, "data");
-    private File templateDir = new File(testDir, "template");
-    private File outputDir = new File("target/test-output/generating-file-visitor");
+    private final File testDir = new File("src/test/data/generating-file-visitor");
+    private final File dataDir = new File(testDir, "data");
+    private final File templateDir = new File(testDir, "template");
+    private final File outputDir = new File("target/test-output/generating-file-visitor");
     private Configuration config;
-    private Map<String, Object> dataModel = new HashMap<String, Object>();
+    private final Map<String, Object> dataModel = new HashMap<String, Object>();
 
     @BeforeMethod
     public void setupDataModel() {

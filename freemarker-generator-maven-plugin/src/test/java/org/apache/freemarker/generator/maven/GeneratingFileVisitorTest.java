@@ -19,17 +19,10 @@
 
 package org.apache.freemarker.generator.maven;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
 import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
-import mockit.Expectations;
-import mockit.Mocked;
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.project.MavenProject;
-import org.junit.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -43,18 +36,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import static org.assertj.core.api.Assertions.*;
+import mockit.Expectations;
+import mockit.Mocked;
+import org.apache.maven.execution.MavenSession;
+import org.apache.maven.project.MavenProject;
+import org.junit.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 public class GeneratingFileVisitorTest extends Assert {
 
-    private static File testDir = new File("src/test/data/generating-file-visitor");
-    private static File dataDir = new File(testDir, "data");
-    private static File templateDir = new File(testDir, "template");
-    private static File outputDir = new File("target/test-output/generating-file-visitor");
-    private static Map<String, OutputGeneratorPropertiesProvider> builders = new HashMap<>();
+    private static final File testDir = new File("src/test/data/generating-file-visitor");
+    private static final File dataDir = new File(testDir, "data");
+    private static final File templateDir = new File(testDir, "template");
+    private static final File outputDir = new File("target/test-output/generating-file-visitor");
+    private static final Map<String, OutputGeneratorPropertiesProvider> builders = new HashMap<>();
     private Configuration config;
-    private Properties pomProperties = new Properties();
+    private final Properties pomProperties = new Properties();
 
     @BeforeClass
     public static void beforeClass() throws IOException {
