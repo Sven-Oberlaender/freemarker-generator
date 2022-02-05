@@ -104,8 +104,12 @@ public class ExamplesTest extends AbstractMainTest {
     public void shouldRunInteractiveTemplateExamples() throws IOException {
         // @TODO We should check the generated output directly
         assertValid(execute("-i ${JsonPathTool.parse(DataSources.first).read(\"$.info.title\")} site/sample/json/swagger-spec.json"));
-        assertValid(execute("-i ${XmlTool.parse(DataSources.first)[\"recipients/person[1]/name\"]} site/sample/xml/recipients.xml"));
-        assertValid(execute("-i ${JsoupTool.parse(DataSources.first).select(\"a\")[0]} site/sample/html/dependencies.html"));
+    //        assertValid(execute("-i
+    // ${XmlTool.parse(DataSources.first)[\"recipients/person[1]/name\"]}
+    // site/sample/xml/recipients.xml"));
+    assertValid(
+        execute(
+            "-i ${JsoupTool.parse(DataSources.first).select(\"a\")[0]} site/sample/html/dependencies.html"));
     }
 
     @Test
